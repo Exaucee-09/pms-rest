@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+/* Custom classes using direct color values */
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+}
+
+.btn-primary:hover {
+    background-color: #388E3C;
+}
+
+.btn-warning {
+    background-color: #FFC107;
+    color: #1F2937;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+}
+
+.btn-warning:hover {
+    background-color: #FFA000;
+}
+
+/* Badge styles */
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 0.25rem;
+}
+
+.badge.occupied {
+    background-color: #FEE2E2;
+    color: #B91C1C;
+}
+
+.badge.available {
+    background-color: #D1FAE5;
+    color: #065F46;
+}
+
+/* Remove all @import and @tailwind directives */
+/* Use direct CSS instead */
+.primary-bg {
+    background-color: #4CAF50;
+}
+
+.primary-bg:hover {
+    background-color: #388E3C;
+}
+
+.secondary-bg {
+    background-color: #FFC107;
+}
+
+.secondary-bg:hover {
+    background-color: #FFA000;
+}
+
+/* Basic utility classes */
+.rounded {
+    border-radius: 0.25rem;
+}
+
+.py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.font-bold {
+    font-weight: bold;
+}
+
+.text-white {
+    color: white;
+}
+
+
+/* Custom styles */
+.btn-custom {
+    background-color: #4CAF50;
+    color: white;
+}
