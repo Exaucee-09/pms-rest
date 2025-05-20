@@ -127,4 +127,44 @@ router.get('/:license_plate', auth, async (req, res) => {
     }
 });
 
+/**
+ * @swagger
+ * /api/vehicles/{license_plate}:
+ *   delete:
+ *     summary: Delete a vehicle
+ *     tags: [Vehicles]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: license_plate
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Vehicle deleted successfully
+ *       404:
+ *         description: Vehicle not found
+ *       500:
+ *         description: Server error
+ */
+router.delete('/:license_plate', auth, async (req, res) => {
+    try {
+        const [result] = await mysqlPool.query(
+            'DELETE FROM vehicles WHERE license_plate = ?',
+            [req.params.license_plate]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ msg: 'Vehicle not found' });
+        }
+
+        res.json({ msg: 'Vehicle deleted successfully' });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server error');
+    }
+});
+
 module.exports = router;

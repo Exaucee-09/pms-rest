@@ -5,7 +5,8 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const authRoutes = require('./routes/auth');
 const parkingRoutes = require('./routes/parking');
-const vehicleRoutes = require('./routes/vehicles')
+const vehicleRoutes = require('./routes/vehicles');
+const ticketRoutes = require('./routes/tickets');
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/api/auth', authRoutes);
 app.use('/api/parking', parkingRoutes);
 app.use('/api/vehicles',vehicleRoutes);
+app.use('/api/tickets', ticketRoutes );
 
 //Basic route for testing
 app.get('/', (req, res) => {
