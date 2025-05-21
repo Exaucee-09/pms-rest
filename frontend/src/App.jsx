@@ -1,45 +1,43 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
-import Sidebar from './components/Sidebar';
+// src/App.jsx
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
 import DashboardPage from './pages/DashboardPage';
 import VehiclesPage from './pages/VehiclesPage';
 import ParkingPage from './pages/ParkingPage';
 import LoginPage from './pages/LoginPage';
-import { useAuth } from './contexts/AuthContext';
-
-const AppLayout = ({ children }) => {
-  return (
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-1 ml-64 p-6">
-        {children}
-      </div>
-    </div>
-  );
-};
-
-const ProtectedRoute = ({ children }) => {
-  const { user } = useAuth();
-  return user ? <AppLayout>{children}</AppLayout> : <Navigate to="/login" />;
-};
+import RegisterPage from './pages/RegisterPage';
+import Sidebar from './components/Sidebar';
 
 function App() {
+  console.log('App component is rendering')
   return (
     <Router>
-      <div className="flex min-h-screen">
-        <Sidebar />
-        <div className="flex-1 overflow-auto ml-64 p-6">
-          <Routes>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route element={<LayoutWithSidebar />}>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/vehicles" element={<VehiclesPage />} />
             <Route path="/parking" element={<ParkingPage />} />
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
-        </div>
-      </div>
+          </Route>
+        </Route>
+      </Routes>
     </Router>
   );
 }
+
+const LayoutWithSidebar = () => {
+  return (
+    <div className="flex min-h-screen">
+      <Sidebar />
+      <div className="flex-1 overflow-auto ml-0 md:ml-64 p-6">
+        <Outlet />
+      </div>
+    </div>
+  );
+};
 
 export default App;

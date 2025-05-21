@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 const AssignForm = ({ spots, vehicles, onSubmit }) => {
+  console.log(spots, "here")
   const [formData, setFormData] = useState({
     spotId: '',
     licensePlate: ''
@@ -39,7 +40,7 @@ const AssignForm = ({ spots, vehicles, onSubmit }) => {
             required
           >
             <option value="">Select Spot</option>
-            {spots.map(spot => (
+            {spots?.map(spot => (
               <option key={spot.id} value={spot.id}>
                 {spot.spot_number} (ID: {spot.id})
               </option>
@@ -60,7 +61,7 @@ const AssignForm = ({ spots, vehicles, onSubmit }) => {
             required
           >
             <option value="">Select Vehicle</option>
-            {vehicles.map(vehicle => (
+            {vehicles?.map(vehicle => (
               <option key={vehicle.license_plate} value={vehicle.license_plate}>
                 {vehicle.license_plate} - {vehicle.make} {vehicle.model}
               </option>

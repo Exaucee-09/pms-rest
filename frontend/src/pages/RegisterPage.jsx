@@ -1,15 +1,16 @@
-// src/pages/LoginPage.jsx
+// src/pages/RegisterPage.jsx
 import { useState } from 'react';
-import { Link} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-const LoginPage = () => {
+const RegisterPage = () => {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const { login } = useAuth();
-    // const navigate = useNavigate();
+    const { register } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,9 +18,9 @@ const LoginPage = () => {
         setLoading(true);
 
         try {
-            await login(email, password);
+            await register(name, email, password);
         } catch (err) {
-            setError(err.response?.data?.msg || 'Login failed');
+            setError(err.response?.data?.msg || 'Registration failed');
             setLoading(false);
         }
     };
@@ -29,7 +30,7 @@ const LoginPage = () => {
             <div className="max-w-md w-full space-y-8">
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                        Sign in to your account
+                        Create a new account
                     </h2>
                 </div>
                 {error && (
@@ -40,6 +41,20 @@ const LoginPage = () => {
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="rounded-md shadow-sm space-y-4">
                         <div>
+                            <label htmlFor="name" className="sr-only">Full Name</label>
+                            <input
+                                id="name"
+                                name="name"
+                                type="text"
+                                autoComplete="name"
+                                required
+                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+                                placeholder="Full Name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </div>
+                        <div>
                             <label htmlFor="email" className="sr-only">Email address</label>
                             <input
                                 id="email"
@@ -47,7 +62,7 @@ const LoginPage = () => {
                                 type="email"
                                 autoComplete="email"
                                 required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
                                 placeholder="Email address"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
@@ -59,33 +74,13 @@ const LoginPage = () => {
                                 id="password"
                                 name="password"
                                 type="password"
-                                autoComplete="current-password"
+                                autoComplete="new-password"
                                 required
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-sm"
-                                placeholder="Password"
+                                placeholder="Password (min 6 characters)"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
-                        </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <input
-                                id="remember-me"
-                                name="remember-me"
-                                type="checkbox"
-                                className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-                            />
-                            <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                                Remember me
-                            </label>
-                        </div>
-
-                        <div className="text-sm">
-                            <Link to="/forgot-password" className="font-medium text-green-600 hover:text-green-500">
-                                Forgot your password?
-                            </Link>
                         </div>
                     </div>
 
@@ -96,15 +91,15 @@ const LoginPage = () => {
                             className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ${loading ? 'opacity-50 cursor-not-allowed' : ''
                                 }`}
                         >
-                            {loading ? 'Signing in...' : 'Sign in'}
+                            {loading ? 'Registering...' : 'Register'}
                         </button>
                     </div>
                 </form>
 
                 <div className="text-center text-sm text-gray-600">
-                    Don't have an account?{' '}
-                    <Link to="/register" className="font-medium text-green-600 hover:text-green-500">
-                        Sign up
+                    Already have an account?{' '}
+                    <Link to="/login" className="font-medium text-green-600 hover:text-green-500">
+                        Sign in
                     </Link>
                 </div>
             </div>
@@ -112,4 +107,4 @@ const LoginPage = () => {
     );
 };
 
-export default LoginPage;
+export default RegisterPage;

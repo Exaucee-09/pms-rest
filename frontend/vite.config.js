@@ -14,21 +14,8 @@ export default defineConfig({
   resolve: {
     extensions: ['.js', '.jsx', '.json']
   },
-  // css: {
-  //   postcss: {
-  //     plugins: [
-  //       (await import('tailwindcss')).default,
-  //       (await import('autoprefixer')).default,
-  //     ],
-  //   },
-  // }
-  // server: {
-  //   proxy: {
-  //     '/api': {
-  //       target: 'http://localhost:5000',
-  //       changeOrigin: true,
-  //       rewrite: (path) => path.replace(/^\/api/, '')
-  //     }
-  //   }
-  // }
+  server: {
+    port: 5173,
+    open: true
+  }
 });
